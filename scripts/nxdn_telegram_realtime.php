@@ -1,7 +1,7 @@
 <?php
 date_default_timezone_set('America/Santiago');
 
-require __DIR__ . '/../telegram.php';
+require __DIR__ . '/../includes/telegram.php';
 
 define('LOG_DIR', '/var/log/nxdnreflector/');
 define('DEBUG_MODE', true);
