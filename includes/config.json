@@ -1,0 +1,10 @@
+{
+    "titulo": "NXLINK DASHBOARD",
+    "subtitulo": "Reflector NXDN",
+    "frase": "CONECTADOS EN UN MUNDO DIGITAL",
+    "tg_principal": "30444",
+    "logo": "img\/nxlink_logo.png",
+    "dvref_host": "reflectores.zonadmr.cl",
+    "dvref_token": "1b55206b7827effe13b557b1a56ca402c48a81f9",
+    "dvref_port": "41400"
+}

@@ -1,0 +1,164 @@
+
+body {
+    background: #0d1117;
+    color: #e6edf3;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.header-banner {
+    background: radial-gradient(circle at top left, #0b3a7e, #02040a 60%);
+    border-bottom: 1px solid #202634;
+    padding: 24px 12px;
+}
+.header-title {
+    font-weight: 700;
+    font-size: 2rem;
+    letter-spacing: 0.05em;
+}
+.header-subtitle {
+    font-size: 0.95rem;
+    opacity: 0.85;
+}
+.tagline-familia {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    font-style: italic;
+}
+
+.card-custom {
+    background: #151b23;
+    border: 1px solid #262c36;
+    border-radius: 14px;
+    padding: 18px;
+    height: 100%;
+    box-shadow: 0 0 0 rgba(0,0,0,0);
+    transition: all 0.2s ease;
+}
+.card-custom:hover {
+    border-color: #58a6ff;
+    box-shadow: 0 0 12px rgba(88,166,255,0.35);
+    transform: translateY(-2px);
+}
+
+.title-module {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #58a6ff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.divider-soft {
+    border-top: 1px solid #252b36;
+    margin: 10px 0 12px 0;
+}
+
+.table-dark-custom {
+    --bs-table-bg: #151b23;
+    --bs-table-border-color: #30363d;
+    --bs-table-striped-bg: #161b22;
+    --bs-table-striped-color: #e6edf3;
+}
+
+.small-label {
+    font-size: 0.75rem;
+    color: #8b949e;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+}
+.status-online { background: #2ea043; }
+.status-offline { background: #f85149; }
+
+/* VU-meter realista */
+.vu-container {
+    width: 100%;
+    height: 24px;
+    background: #222831;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #393f47;
+    margin-top: 6px;
+}
+.vu-bar {
+    height: 100%;
+    width: 5%;
+    background: linear-gradient(90deg, #2ecc71, #f1c40f, #e74c3c);
+    transition: width 0.25s ease-in-out;
+}
+.vu-active {
+    box-shadow: 0 0 10px rgba(231,76,60,0.7);
+}
+
+@media (max-width: 576px) {
+    .header-title img {
+        height: 70px !important;
+    }
+    .header-title div div:first-child {
+        font-size: 1.5rem !important;
+    }
+}
+
+.nav-nx-controls {
+    background: rgba(0,0,0,0.35);
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(4px);
+}
+/* ===========================
+   LOGIN RESPONSIVE (NXDN)
+   =========================== */
+.login-page{
+  min-height: 100dvh;           /* mejor que vh en móviles */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;                /* evita que choque con bordes */
+}
+
+/* wrapper con ancho fluido */
+.login-wrap{
+  width: 100%;
+  max-width: 380px;             /* más compacto */
+}
+
+/* card del login */
+.login-card{
+  width: 100%;
+  max-width: 100% !important;
+  padding: 18px !important;     /* reduce “inflado” */
+}
+
+/* título más controlado */
+.login-card .title-module{
+  font-size: 1.1rem !important;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+/* labels y controles más compactos */
+.login-card .small-label{
+  font-size: .85rem;
+}
+
+.login-card .form-control{
+  padding: .55rem .75rem;
+  font-size: .95rem;
+}
+
+/* botón igual de cómodo pero no gigante */
+.login-card .btn{
+  padding: .6rem .9rem;
+  font-size: .95rem;
+}
+
+/* extra para pantallas MUY pequeñas */
+@media (max-width: 360px){
+  .login-wrap{ max-width: 320px; }
+  .login-card{ padding: 14px !important; }
+  .login-card .title-module{ font-size: 1rem !important; }
+}
