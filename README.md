@@ -24,8 +24,8 @@ Diseñado para funcionar sobre servidores Linux (Debian / Ubuntu / Raspberry Pi 
 ---
 
 ## DASHBOARD
-![Dashboard NXLINK](img/dashboard1.png)
-![Dashboard NXLINK](img/dashboard2.png)
+![Dashboard NXLINK](img/dashboard_1.png)
+![Dashboard NXLINK](img/dashboard_2.png)
 
 
 ## 🧠 ¿Para qué sirve?
