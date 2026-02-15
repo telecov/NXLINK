@@ -18,6 +18,7 @@ Permite visualizar:
 - Configuración básica del sistema
 - Seguridad con autenticación
 - Integración opcional con Telegram
+- Selector de idioma
 
 Diseñado para funcionar sobre servidores Linux (Debian / Ubuntu / Raspberry Pi / Banana Pi).
 
