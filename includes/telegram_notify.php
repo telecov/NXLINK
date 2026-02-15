@@ -21,6 +21,20 @@ define('DAILY_REPORT_AFTER_HOUR', 12);
 
 function dbg($m){ if(DEBUG_MODE) echo "[DBG] $m\n"; }
 
+// ✅ Enviar Telegram con formato compatible con tu telegram.php (retorno tipo ['ok'=>true/...])
+function tg_send_ok(string $msg, string $tag='Telegram'): bool {
+    $r = telegram_send($msg);
+
+    $ok = (is_array($r) && (($r['ok'] ?? false) === true));
+    if (!$ok) {
+        $e = is_array($r)
+            ? ($r['description'] ?? json_encode($r, JSON_UNESCAPED_UNICODE))
+            : 'no response';
+        dbg("❌ Error $tag: " . $e);
+    }
+    return $ok;
+}
+
 // ======================================================
 // 1) STATE
 // ======================================================
@@ -180,13 +194,10 @@ if($linked){
     $msg.="\n🕒 ".date('Y-m-d H:i:s');
 
     if((time() - ($state['summary']['last'] ?? 0)) >= TG_REMINDER_INTERVAL){
-        [$ok,$e]=telegram_send($msg);
-        if($ok){
+        if(tg_send_ok($msg, 'Telegram resumen')){
             $state['summary']['last']=time();
             save_state($state);
             dbg("✅ Resumen horario enviado.");
-        } else {
-            dbg("❌ Error Telegram: ".$e);
         }
     } else {
         dbg("Resumen NO enviado (intervalo aún no cumple).");
@@ -224,20 +235,17 @@ if(should_send_daily($state, $today, $hour_now)){
     $msg.="💾 RAM: {$ram_used}/{$ram_total} MB ({$ram_pct}%)\n";
     $msg.="🔌 Carga CPU: {$load}\n";
 
-    [$ok,$e]=telegram_send($msg);
-    if($ok){
+    if(tg_send_ok($msg, 'Telegram diario')){
         $state['daily']['last']=$today;
         save_state($state);
         dbg("✅ Reporte diario enviado.");
-    } else {
-        dbg("❌ Error Telegram (diario): ".$e);
     }
 }
 
 // ======================================================
 // 3) DETECTOR DE CAMBIO DE IP PÚBLICA (CONFIRMADO 15 MIN)
 // ======================================================
-$ip_actual = trim(shell_exec("curl -s https://api.ipify.org"));
+$ip_actual = trim(shell_exec("/usr/bin/curl -s https://api.ipify.org"));
 if ($ip_actual) {
 
     $registro_ip = &$state['ip_change'];
@@ -271,18 +279,16 @@ if ($ip_actual) {
                  . "📌 Actualiza hostfile / DNS / No-IP.\n"
                  . "⏱️ Confirmado tras 15 minutos.";
 
-            [$ok,$e]=telegram_send($msg);
-            if($ok){
+            if(tg_send_ok($msg, 'Telegram IP')){
                 $registro_ip['last_ip'] = $ip_actual;
                 $registro_ip['notified'] = true;
                 $registro_ip['detected_ts'] = 0;
                 save_state($state);
                 dbg("✅ Notificación IP enviada.");
-            } else {
-                dbg("❌ Error Telegram (IP): ".$e);
             }
         }
     }
 }
 
 dbg("Ejecución finalizada.");
+
