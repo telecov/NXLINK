@@ -1,0 +1,205 @@
+<?php
+return [
+  "dashboard" => "Dashboard",
+  "system_status" => "System status",
+  "last_update" => "Last update",
+
+  "general_status" => "General Status",
+  "main_talkgroup" => "Main TalkGroup",
+  "dvref_status" => "DVRef Status",
+  "server_status" => "Server Status",
+
+  "cpu_load_1m" => "CPU (Load 1m)",
+  "cores" => "cores",
+  "load_avg" => "Load Avg",
+  "memory_ram" => "RAM Memory",
+  "disk" => "Disk",
+
+  "connected_stations" => "Connected stations",
+  "callsign" => "Callsign",
+  "ip" => "IP",
+  "connected_since" => "Connected since",
+  "no_connected_stations" => "No stations connected right now.",
+
+  "reflector_activity" => "Reflector overall activity",
+  "live_tx_title" => "Live transmission",
+  "listening" => "Reflector listening.",
+
+  "tx_today" => "TX today",
+  "users" => "Users",
+  "air_time" => "On-air time",
+  "level" => "Level",
+  "first_tx" => "First TX",
+  "last_tx" => "Last TX",
+
+  "traffic_history" => "NXDN traffic history",
+  "start" => "Start",
+  "end" => "End",
+  "duration" => "Duration",
+  "radioid" => "RadioID",
+  "tg" => "TG",
+  "no_traffic" => "No traffic found in the selected log.",
+
+  // Admin / Personalization
+  "admin_access_title" => "Access – NXDN Personalization",
+  "admin_access_required" => "🔐 Access required",
+  "admin_password_label" => "Admin password",
+  "admin_login_btn" => "Login",
+  "admin_back_dashboard" => "Back to Dashboard",
+  "admin_wrong_password" => "Wrong password.",
+
+  "admin_personalization_title" => "Personalization – NXLINK",
+  "admin_personalization_header" => "NXLINK PERSONALIZATION",
+  "admin_personalization_subheader" => "Adjust visual settings, DVRef and Telegram",
+  "admin_logout" => "Logout",
+
+  "admin_visual_identity" => "Visual Identity",
+  "admin_dashboard_title_label" => "Dashboard title",
+  "admin_subtitle_label" => "Subtitle",
+  "admin_tagline_label" => "Tagline",
+  "admin_current_logo" => "Current logo",
+  "admin_save_visual_btn" => "Save identity",
+  "admin_saved_visual" => "✅ Visual identity saved.",
+
+  "admin_dvref_config" => "DVRef Configuration",
+  "admin_main_tg" => "Main TalkGroup",
+  "admin_dvref_token" => "DVRef Token",
+  "admin_dvref_token_ph" => "DVRef token (if applicable)",
+  "admin_dvref_host" => "Host (DNS) published on DVRef",
+  "admin_dvref_port" => "Port published on DVRef",
+  "admin_save_dvref_btn" => "Save DVRef",
+  "admin_saved_dvref" => "✅ DVRef configuration saved.",
+
+  "admin_telegram" => "Telegram",
+  "admin_bot_token" => "Bot token",
+  "admin_chat_id" => "Chat ID",
+  "admin_invite_link" => "Invite link (optional)",
+  "admin_save_telegram_btn" => "Save Telegram",
+  "admin_saved_telegram" => "✅ Telegram saved.",
+  "admin_open_invite" => "Open invite link",
+
+  "admin_manual_messages" => "Messages (manual)",
+  "admin_manual_messages_hint" => "Use these buttons to test before automating with CRON.",
+  "admin_test_telegram_btn" => "Test Telegram",
+  "admin_send_linked_btn" => "Send connected stations (now)",
+  "admin_send_server_btn" => "Send server status (now)",
+  "admin_send_dvref_btn" => "Send DVRef status (now)",
+  "admin_detected_log" => "Detected log",
+  "admin_log_not_found" => "Not found",
+
+  "admin_tg_test_ok" => "Telegram test OK",
+  "admin_tg_test_sent" => "✅ Test message sent.",
+  "admin_no_log_found" => "❌ NXDN log not found in /var/log/nxdnreflector/",
+  "admin_no_linked_found" => "⚠️ No connected stations detected (or block not found) in the latest log.",
+  "admin_connected_stations_title" => "Connected Stations",
+  "admin_linked_sent" => "✅ Connected stations summary sent.",
+  "admin_server_status_title" => "Server Status",
+  "admin_cpu_temp" => "CPU temp",
+  "admin_uptime" => "Uptime",
+  "admin_ram" => "RAM",
+  "admin_cpu_load" => "CPU load",
+  "admin_server_sent" => "✅ Server status sent.",
+  "admin_dvref_status_title" => "DVRef Status",
+  "admin_dvref_sent" => "✅ DVRef status sent.",
+
+
+  "nav_dashboard" => "Dashboard",
+  "nav_personalization" => "Personalization",
+  "nav_settings" => "Settings",
+  "nav_about" => "About",
+  "nav_telegram" => "Telegram",
+
+  // Settings / Configuration
+  "cfg_login_title" => "NXDN Settings Access",
+  "cfg_login_header" => "NXDN Settings",
+  "cfg_title" => "NXDN Settings",
+  "cfg_header" => "NXLINK SETTINGS",
+  "cfg_subheader" => "Reflector Configuration",
+
+  "cfg_saved_ok" => "NXDN configuration saved successfully (backup created).",
+
+  "csrf_invalid" => "Invalid token. Refresh the page and try again.",
+
+  "cfg_ip_invalid" => "Invalid IP. Use format 192.168.1.50/24",
+  "cfg_gw_invalid" => "Invalid gateway.",
+  "cfg_dns_invalid" => "Invalid DNS. Use format 8.8.8.8,1.1.1.1",
+  "cfg_no_changes" => "You did not enter any changes for Ethernet.",
+  "cfg_eth_updated" => "✅ Ethernet configuration updated.",
+
+  "cfg_nxdn_config" => "NXDN Configuration",
+  "cfg_tg_main" => "Main TalkGroup",
+  "cfg_daemon" => "Daemon (0 = OFF / 1 = ON)",
+  "cfg_log_path" => "Log path",
+  "cfg_log_root" => "Log base name",
+  "cfg_port" => "NXDN Port",
+  "cfg_save_btn" => "Save configuration",
+
+  "cfg_service" => "Service",
+  "cfg_status" => "Status",
+  "cfg_server_ip" => "Server IP",
+  "cfg_start" => "Start",
+  "cfg_restart" => "Restart",
+  "cfg_stop" => "Stop",
+  "cfg_reboot" => "Reboot server",
+  "cfg_reboot_confirm" => "⚠️ Reboot the entire server?",
+
+  "cfg_eth_title" => "Ethernet IP",
+  "cfg_current_ip" => "Current IP",
+  "cfg_current_gw" => "Current gateway",
+  "cfg_no_ip" => "No IP",
+  "cfg_no_gw" => "No gateway",
+
+  "cfg_change_net_confirm" => "⚠️ Changing IP/Gateway may disconnect you remotely. Continue?",
+  "cfg_new_ip" => "New IP (e.g. 192.168.1.50/24)",
+  "cfg_new_gw" => "New gateway (e.g. 192.168.1.1)",
+  "cfg_dns" => "DNS (optional, e.g. 8.8.8.8,1.1.1.1)",
+  "cfg_leave_blank" => "Leave blank if you don't want to change it",
+  "cfg_apply_changes" => "Apply changes",
+  "cfg_net_reco" => "Recommendation: use a documented static IP. If you manage remotely, change it on-site or with out-of-band console access.",
+
+  "cfg_security" => "Security",
+  "cfg_new_password" => "New password",
+  "cfg_change_password" => "Change password",
+
+  // About
+  "about_title" => "About",
+  "about_header" => "ABOUT NXLINK",
+
+  "about_section_nxlink_title" => "NXLink",
+  "about_nxlink_p1" => "<strong>NXLink Dashboard</strong> is the web panel for the NXDN reflector designed to show the system status, activity and day-to-day operation in a <strong>clear</strong> way, so any ham can see what’s happening and join the digital mode.",
+  "about_nxlink_li1" => "<strong>Instant clarity:</strong> status, activity and useful data in one view.",
+  "about_nxlink_li2" => "<strong>Lightweight design:</strong> periodic refresh and Bootstrap components for stability.",
+  "about_nxlink_li3" => "<strong>Customizable:</strong> title, subtitle, tagline and logo from Personalization.",
+  "about_nxlink_li4" => "<strong>Community-first:</strong> built for real operation, no visual noise.",
+
+  "about_creator_p1" => "Created by <strong>CA2RDP / TELECOVIAJERO</strong> as part of the <strong>web dashboard universe</strong> for digital reflectors (P25 · YSF · NXDN), aiming for a modern and easy-to-understand experience.",
+  "about_inspired_p1" => "NXLink was inspired and motivated by my friend <strong>Jonathan CE4KRC</strong>, who supported and pushed the idea of giving NXDN a web UI worthy of the ecosystem.",
+
+  "about_section_nxdn_title" => "What is NXDN in ham radio and how do we use it?",
+  "about_nxdn_p1" => "<strong>NXDN</strong> is a digital mode used by radio amateurs to experiment with clear and stable communications. In the hobby, we mainly use it by connecting to a <strong>reflector</strong> through <strong>hotspots / MMDVM</strong> or gateways to chat and keep an active network locally and internationally.",
+  "about_nxdn_li1" => "<strong>Hotspots / MMDVM:</strong> link your NXDN radio to the reflector using the Internet.",
+  "about_nxdn_li2" => "<strong>Rooms / TG:</strong> group conversations by community (for example <code>30444</code>).",
+  "about_nxdn_li3" => "<strong>Best practices:</strong> identify your callsign, leave pauses and avoid doubles.",
+
+  "about_section_universe_title" => "Web Dashboard Universe",
+  "about_universe_p1" => "NXLink is part of Telecoviajero’s web dashboard ecosystem:",
+  "about_universe_lynk25" => "P25 reflector dashboard",
+  "about_universe_luxlink" => "YSF reflector dashboard",
+  "about_universe_nxlink" => "NXDN reflector dashboard",
+  "about_universe_aurox" => "SVXLink dashboard",
+  "about_universe_philosophy" => "Common philosophy: <strong>clarity</strong>, <strong>stability</strong>, <strong>modern aesthetics</strong> and real tools for operation.",
+
+  "about_section_resources_title" => "NXDN Resources",
+
+  "about_section_thanks_title" => "Acknowledgements",
+  "about_thanks_p1" => "Thanks to <strong>Jonathan Naylor, G4KLX</strong> for the open-source work that makes NXDN reflectors and utilities possible.",
+  "about_thanks_p2" => "Also thanks to <strong>NOSTAR</strong> for the YSF/P25/NXDN reflector installer that helps the community experiment with digital modes.",
+  "about_links_note" => "Links point to public repos to review code and documentation.",
+
+  "about_section_support_title" => "Support NXLink",
+  "about_support_p1" => "If you want to support this project <strong>voluntarily</strong>, you can donate. You can also follow me on social media for more ham radio content and technical projects.",
+  "about_donate_btn" => "Voluntary donation",
+  "about_support_note" => "Thanks for supporting the network’s growth and the dashboard development.",
+
+
+];
