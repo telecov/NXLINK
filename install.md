@@ -207,9 +207,7 @@ sudo crontab -u www-data -e
 ```
 
 ```bash
-* * * * * /usr/bin/php /var/www/html/includes/telegram_notif.php >> /var/www/html/data/cron_telegram.log 2>&1
-* * * * * /usr/bin/php /var/www/html/includes/generar_estado_reflector.php >> /var/www/html/data/cron_estado.log 2>&1
-
+*/10 * * * * /usr/bin/php /var/www/html/NXDN/includes/telegram_notify.php >> /var/www/html/NXDN/data/cron_telegram_notify.log 2>&1
 ```
 
 Verifica el Crontab
