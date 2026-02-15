@@ -2,6 +2,11 @@
 date_default_timezone_set('America/Santiago');
 
 /* ===========================
+   IDIOMA (i18n)
+   =========================== */
+require_once __DIR__ . "/includes/lang.php";
+
+/* ===========================
    CONFIG (DVREF + VISUAL)
    =========================== */
 $configFile = __DIR__ . "/includes/config.json";
@@ -16,14 +21,12 @@ require_once __DIR__ . "/includes/telegram.php";
 $tgCfg = tg_load_config();
 $tgInviteLink = $tgCfg["invite_link"] ?? "";
 
-
 $titulo      = !empty($config["titulo"]) ? (string)$config["titulo"] : "NXDN LINK";
 $subtitulo   = !empty($config["subtitulo"]) ? (string)$config["subtitulo"] : "Reflector NXDN";
 $frase       = !empty($config["frase"]) ? (string)$config["frase"] : "La frecuencia que nos mantiene conectados en el mundo digital";
 $logo        = !empty($config["logo"]) ? (string)$config["logo"] : "img/nxlink_logo.png";
 
 $tgPrincipal = !empty($config["tg_principal"]) ? (string)$config["tg_principal"] : "30444";
-
 
 $dvrefApiUrl = "https://dvref.com/api/v2/nxdn/reflectors/";
 $dvrefToken  = !empty($config["dvref_token"]) ? trim((string)$config["dvref_token"]) : "";
@@ -212,13 +215,12 @@ $reflectorStatus = ($lines !== false && count($lines) > 0) ? "ONLINE" : "OFFLINE
    ============================================================ */
 function dvref_status_check(array $cfg, $cache_file, $cache_ttl = 300) {
 
-    $api = "https://dvref.com/api/v2/nxdn/reflectors/";
+    $api  = "https://dvref.com/api/v2/nxdn/reflectors/";
     $tok  = trim((string)($cfg["dvref_token"] ?? ""));
     $host = strtolower(trim((string)($cfg["dvref_host"] ?? "")));
     $port = (int)($cfg["dvref_port"] ?? 0);
     $tg   = trim((string)($cfg["tg_principal"] ?? ""));
 
-    // Validaciones mínimas
     if ($api === "" || stripos($api, "http") !== 0) {
         return ['status' => 'CONFIG DVREF INVÁLIDA', 'detail' => 'dvref_api_url debe ser URL (https://...)', 'last_verified_at' => null];
     }
@@ -226,19 +228,16 @@ function dvref_status_check(array $cfg, $cache_file, $cache_ttl = 300) {
         return ['status' => 'CONFIG DVREF INCOMPLETA', 'detail' => 'Falta dvref_host / dvref_port / tg_principal', 'last_verified_at' => null];
     }
 
-    // Cache
     if (file_exists($cache_file) && (time() - filemtime($cache_file) < $cache_ttl)) {
         $cached = json_decode(file_get_contents($cache_file), true);
         if (is_array($cached)) return $cached;
     }
 
-    // cURL
     $ch = curl_init($api);
     $headers = [
         "Accept: application/json",
         "User-Agent: NXLINK-Dashboard/1.0 (CA2RDP)"
     ];
-    // Token opcional (si tu endpoint lo exige, aquí se manda)
     if ($tok !== "") {
         $headers[] = "Authorization: Token {$tok}";
     }
@@ -267,15 +266,12 @@ function dvref_status_check(array $cfg, $cache_file, $cache_ttl = 300) {
         return ['status' => 'ERROR DVREF', 'detail' => 'Respuesta no es JSON', 'last_verified_at' => null];
     }
 
-    // DVRef suele devolver lista directa "reflectors": [...] (según docs de ejemplo)
     $reflectors = null;
     if (isset($data["reflectors"]) && is_array($data["reflectors"])) {
         $reflectors = $data["reflectors"];
     } elseif (isset($data["data"]["reflectors"]) && is_array($data["data"]["reflectors"])) {
-        // por si viene envuelto (como tu ejemplo P25 viejo)
         $reflectors = $data["data"]["reflectors"];
     } elseif (array_keys($data) === range(0, count($data) - 1)) {
-        // lista directa sin wrapper
         $reflectors = $data;
     }
 
@@ -291,8 +287,6 @@ function dvref_status_check(array $cfg, $cache_file, $cache_ttl = 300) {
 
         $dns  = strtolower(trim((string)($ref["dns"] ?? $ref["host"] ?? "")));
         $rport = (int)($ref["port"] ?? 0);
-
-        // En DVRef, "designator" suele ser el identificador (en P25 lo usabas como TG)
         $designator = (string)($ref["designator"] ?? $ref["tg"] ?? $ref["talkgroup"] ?? "");
 
         if ($dns === $host && $rport === $port && $designator === $tg) {
@@ -320,12 +314,16 @@ $dvrefStatus = dvref_status_check($config, $cacheDir . "/dvref_status.json", 300
 $tgOnline = ($dvrefStatus["status"] === "ONLINE DVREF") ? true : false;
 $tgApiError = $dvrefStatus["detail"] ?? null;
 
+/* ===========================
+   Helpers UI
+   =========================== */
+$langCode = $_SESSION['lang'] ?? 'es';
 ?>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="<?php echo htmlspecialchars($langCode); ?>">
 <head>
 <meta charset="UTF-8">
-<title><?php echo htmlspecialchars($titulo); ?> – Dashboard</title>
+<title><?php echo htmlspecialchars($titulo); ?> – <?php echo __("dashboard"); ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -361,11 +359,16 @@ $tgApiError = $dvrefStatus["detail"] ?? null;
       </div>
 
       <div class="col-md-4 text-md-end">
-        <div class="small-label mb-1">Estado del sistema</div>
+        <div class="d-flex justify-content-md-end justify-content-start gap-2 mb-2">
+          <a href="?lang=es" class="btn btn-outline-light btn-sm <?php echo ($langCode==='es')?'active':''; ?>">🇪🇸 ES</a>
+          <a href="?lang=en" class="btn btn-outline-light btn-sm <?php echo ($langCode==='en')?'active':''; ?>">🇺🇸 EN</a>
+        </div>
+
+        <div class="small-label mb-1"><?php echo __("system_status"); ?></div>
         <span class="status-dot status-<?php echo strtolower($reflectorStatus) === 'online' ? 'online' : 'offline'; ?>"></span>
         <span class="fw-semibold"><?php echo $reflectorStatus; ?></span>
         <div class="small-label mt-1">
-          Última actualización: <?php echo date("d-m-Y H:i:s"); ?>
+          <?php echo __("last_update"); ?>: <?php echo date("d-m-Y H:i:s"); ?>
         </div>
       </div>
     </div>
@@ -380,16 +383,16 @@ $tgApiError = $dvrefStatus["detail"] ?? null;
   <div class="col-lg-4">
     <div class="card-custom">
       <div class="title-module">
-        <i class="bi bi-speedometer2"></i> Estado General
+        <i class="bi bi-speedometer2"></i> <?php echo __("general_status"); ?>
       </div>
       <div class="divider-soft"></div>
 
-      <p class="mb-1 small-label">TalkGroup Principal</p>
+      <p class="mb-1 small-label"><?php echo __("main_talkgroup"); ?></p>
       <p class="mb-2">
-        <span class="badge bg-primary">TG <?php echo htmlspecialchars($tgPrincipal); ?></span>
+        <span class="badge bg-primary"><?php echo __("tg"); ?> <?php echo htmlspecialchars($tgPrincipal); ?></span>
       </p>
 
-      <p class="mb-1 small-label">Estado DVRef</p>
+      <p class="mb-1 small-label"><?php echo __("dvref_status"); ?></p>
       <p class="mb-2">
         <?php if ($dvrefStatus["status"] === "ONLINE DVREF"): ?>
           <span class="badge bg-success">ONLINE</span>
@@ -411,7 +414,7 @@ $tgApiError = $dvrefStatus["detail"] ?? null;
 
       <div class="divider-soft mt-3"></div>
       <div class="title-module mb-2">
-        <i class="bi bi-hdd-network"></i> Estado del Servidor
+        <i class="bi bi-hdd-network"></i> <?php echo __("server_status"); ?>
       </div>
 
       <?php
@@ -447,20 +450,26 @@ $tgApiError = $dvrefStatus["detail"] ?? null;
       ?>
 
       <div class="mb-3">
-        <p class="small-label mb-1">CPU (Load 1m)</p>
+        <p class="small-label mb-1"><?php echo __("cpu_load_1m"); ?></p>
         <div class="progress" style="height: 12px;">
           <div class="progress-bar <?php echo $cpuColor; ?>" role="progressbar"
                style="width: <?php echo $cpuPercent; ?>%;"
                aria-valuenow="<?php echo $cpuPercent; ?>" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
-        <p class="mb-0 mt-1"><?php echo $cpuPercent; ?>% <span class="small-label">(<?php echo $nCpus; ?> núcleos)</span></p>
+        <p class="mb-0 mt-1">
+          <?php echo $cpuPercent; ?>%
+          <span class="small-label">(<?php echo $nCpus; ?> <?php echo __("cores"); ?>)</span>
+        </p>
         <p class="mb-0 mt-1 small-label">
-          Load Avg → 1m: <strong><?php echo $load1; ?></strong> / 5m: <strong><?php echo $load5; ?></strong> / 15m: <strong><?php echo $load15; ?></strong>
+          <?php echo __("load_avg"); ?> →
+          1m: <strong><?php echo $load1; ?></strong> /
+          5m: <strong><?php echo $load5; ?></strong> /
+          15m: <strong><?php echo $load15; ?></strong>
         </p>
       </div>
 
       <div class="mb-3">
-        <p class="small-label mb-1">Memoria RAM</p>
+        <p class="small-label mb-1"><?php echo __("memory_ram"); ?></p>
         <div class="progress" style="height: 12px;">
           <div class="progress-bar bg-info" role="progressbar"
                style="width: <?php echo $ramPercent; ?>%;"
@@ -470,7 +479,7 @@ $tgApiError = $dvrefStatus["detail"] ?? null;
       </div>
 
       <div class="mb-2">
-        <p class="small-label mb-1">Disco ( / )</p>
+        <p class="small-label mb-1"><?php echo __("disk"); ?> ( / )</p>
         <div class="progress" style="height: 12px;">
           <div class="progress-bar bg-warning" role="progressbar"
                style="width: <?php echo $diskPercent; ?>%;"
@@ -485,7 +494,7 @@ $tgApiError = $dvrefStatus["detail"] ?? null;
   <div class="col-lg-8">
     <div class="card-custom">
       <div class="title-module">
-        <i class="bi bi-people"></i> Estaciones conectadas
+        <i class="bi bi-people"></i> <?php echo __("connected_stations"); ?>
       </div>
       <div class="divider-soft"></div>
 
@@ -493,9 +502,9 @@ $tgApiError = $dvrefStatus["detail"] ?? null;
         <table class="table table-dark table-striped table-hover table-sm table-dark-custom align-middle mb-0">
           <thead>
             <tr>
-              <th>Indicativo</th>
-              <th>IP</th>
-              <th>Conectado desde</th>
+              <th><?php echo __("callsign"); ?></th>
+              <th><?php echo __("ip"); ?></th>
+              <th><?php echo __("connected_since"); ?></th>
             </tr>
           </thead>
           <tbody>
@@ -516,7 +525,7 @@ $tgApiError = $dvrefStatus["detail"] ?? null;
               </tr>
             <?php endforeach; ?>
           <?php else: ?>
-            <tr><td colspan="3" class="text-center small-label">No hay estaciones conectadas en este momento.</td></tr>
+            <tr><td colspan="3" class="text-center small-label"><?php echo __("no_connected_stations"); ?></td></tr>
           <?php endif; ?>
           </tbody>
         </table>
@@ -531,20 +540,20 @@ $tgApiError = $dvrefStatus["detail"] ?? null;
   <div class="col-12">
     <div class="card-custom">
       <div class="title-module">
-        <i class="bi bi-graph-up-arrow"></i> Actividad general del reflector
+        <i class="bi bi-graph-up-arrow"></i> <?php echo __("reflector_activity"); ?>
       </div>
       <div class="divider-soft"></div>
 
       <div class="mb-3">
         <div class="fw-semibold mb-1">
-          <i class="bi bi-broadcast-pin"></i> Transmisión en vivo
+          <i class="bi bi-broadcast-pin"></i> <?php echo __("live_tx_title"); ?>
         </div>
 
         <div class="vu-container">
           <div id="vumeter" class="vu-bar"></div>
         </div>
 
-        <div id="tx-info" class="mt-2 small-label">Reflector en escucha.</div>
+        <div id="tx-info" class="mt-2 small-label"><?php echo __("listening"); ?></div>
       </div>
 
       <div class="divider-soft"></div>
@@ -552,26 +561,26 @@ $tgApiError = $dvrefStatus["detail"] ?? null;
       <div class="row text-center mt-2">
         <div class="col-6 col-md">
           <div class="fw-bold fs-5"><?php echo $totalTx; ?></div>
-          <div class="small-label">TX hoy</div>
+          <div class="small-label"><?php echo __("tx_today"); ?></div>
         </div>
         <div class="col-6 col-md">
           <div class="fw-bold fs-5"><?php echo $usersCount; ?></div>
-          <div class="small-label">Usuarios</div>
+          <div class="small-label"><?php echo __("users"); ?></div>
         </div>
         <div class="col-6 col-md">
           <div class="fw-bold fs-5"><?php echo $totalTimeFmt; ?></div>
-          <div class="small-label">Tiempo al aire</div>
+          <div class="small-label"><?php echo __("air_time"); ?></div>
         </div>
         <div class="col-6 col-md">
-          <span class="badge bg-info text-dark mt-2"><?php echo $nivel; ?></span>
-          <div class="small-label">Nivel</div>
+          <span class="badge bg-info text-dark mt-2"><?php echo htmlspecialchars($nivel); ?></span>
+          <div class="small-label"><?php echo __("level"); ?></div>
         </div>
       </div>
 
       <div class="divider-soft mt-3"></div>
       <p class="small-label mb-0 text-center">
-        Primera TX: <strong><?php echo $firstTx ?: "—"; ?></strong> ·
-        Última TX: <strong><?php echo $lastTx ?: "—"; ?></strong>
+        <?php echo __("first_tx"); ?>: <strong><?php echo $firstTx ?: "—"; ?></strong> ·
+        <?php echo __("last_tx"); ?>: <strong><?php echo $lastTx ?: "—"; ?></strong>
       </p>
     </div>
   </div>
@@ -581,7 +590,7 @@ $tgApiError = $dvrefStatus["detail"] ?? null;
   <div class="col-12">
     <div class="card-custom">
       <div class="title-module">
-        <i class="bi bi-clock-history"></i> Historial de tráfico NXDN
+        <i class="bi bi-clock-history"></i> <?php echo __("traffic_history"); ?>
       </div>
       <div class="divider-soft"></div>
 
@@ -589,7 +598,12 @@ $tgApiError = $dvrefStatus["detail"] ?? null;
         <table class="table table-dark table-striped table-hover table-sm table-dark-custom align-middle mb-0">
           <thead>
             <tr>
-              <th>Inicio</th><th>Fin</th><th>Duración</th><th>RadioID</th><th>Indicativo</th><th>TG</th>
+              <th><?php echo __("start"); ?></th>
+              <th><?php echo __("end"); ?></th>
+              <th><?php echo __("duration"); ?></th>
+              <th><?php echo __("radioid"); ?></th>
+              <th><?php echo __("callsign"); ?></th>
+              <th><?php echo __("tg"); ?></th>
             </tr>
           </thead>
           <tbody>
@@ -613,7 +627,7 @@ $tgApiError = $dvrefStatus["detail"] ?? null;
               </tr>
             <?php endforeach; ?>
           <?php else: ?>
-            <tr><td colspan="6" class="text-center small-label">Sin tráfico registrado en el log seleccionado.</td></tr>
+            <tr><td colspan="6" class="text-center small-label"><?php echo __("no_traffic"); ?></td></tr>
           <?php endif; ?>
           </tbody>
         </table>
@@ -626,6 +640,19 @@ $tgApiError = $dvrefStatus["detail"] ?? null;
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- i18n para JS -->
+<script>
+window.I18N = {
+  listening: "<?php echo addslashes(__('listening')); ?>",
+  live_tx_title: "<?php echo addslashes(__('live_tx_title')); ?>",
+  tg: "<?php echo addslashes(__('tg')); ?>",
+  duration: "<?php echo addslashes(__('duration')); ?>",
+  callsign: "<?php echo addslashes(__('callsign')); ?>",
+  radioid: "<?php echo addslashes(__('radioid')); ?>"
+};
+</script>
+
 <script src="js/vumeter.js"></script>
 
 <?php include __DIR__ . '/includes/footer_nxdn.php'; ?>
