@@ -3,8 +3,13 @@ session_start();
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Pragma: no-cache");
 
-
 date_default_timezone_set('America/Santiago');
+
+/* ===========================
+   IDIOMA (i18n)
+   =========================== */
+require_once __DIR__ . "/includes/lang.php";
+$langCode = $_SESSION['lang'] ?? 'es';
 
 /* =============================
    LOGOUT
@@ -16,7 +21,6 @@ if (isset($_GET['logout'])) {
     header("Location: index.php");
     exit;
 }
-
 
 /* =============================
    ARCHIVOS CONFIG
@@ -42,6 +46,9 @@ $securityFile = __DIR__ . '/includes/security.json';
 $security = file_exists($securityFile) ? json_decode(file_get_contents($securityFile), true) : [];
 if (!is_array($security)) $security = [];
 
+/* =============================
+   LOGIN
+   ============================= */
 if (!isset($_SESSION['nxdn_auth'])) {
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'])) {
@@ -50,42 +57,47 @@ if (!isset($_SESSION['nxdn_auth'])) {
             header("Location: personalizacion.php");
             exit;
         } else {
-            $error = "Clave incorrecta.";
+            $error = __("admin_wrong_password"); // "Clave incorrecta."
         }
     }
     ?>
     <!DOCTYPE html>
-    <html lang="es">
+    <html lang="<?php echo htmlspecialchars($langCode); ?>">
     <head>
         <meta charset="UTF-8">
-        <title>Acceso – Personalización NXDN</title>
+        <title><?php echo __("admin_access_title"); ?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/styles.css">
     </head>
     <body class="login-page">
-  <div class="login-wrap">
-    <div class="card-custom login-card">
+      <div class="login-wrap">
+        <div class="card-custom login-card">
 
-        <div class="title-module text-center">🔐 Acceso requerido</div>
-        <div class="divider-soft"></div>
+            <div class="d-flex justify-content-center gap-2 mb-2">
+              <a href="?lang=es" class="btn btn-outline-light btn-sm <?php echo ($langCode==='es')?'active':''; ?>">🇪🇸 ES</a>
+              <a href="?lang=en" class="btn btn-outline-light btn-sm <?php echo ($langCode==='en')?'active':''; ?>">🇺🇸 EN</a>
+            </div>
 
-        <?php if (!empty($error)): ?>
-            <div class="alert alert-danger text-center"><?php echo htmlspecialchars($error); ?></div>
-        <?php endif; ?>
+            <div class="title-module text-center"><?php echo __("admin_access_required"); ?></div>
+            <div class="divider-soft"></div>
 
-        <form method="post">
-            <label class="small-label">Clave de administración</label>
-            <input type="password" name="password" class="form-control mb-3" required>
-            <button class="btn btn-primary w-100">Acceder</button>
-        </form>
-<a href="index.php" class="btn btn-outline-secondary w-100">
-    ← Volver al Dashboard
-</a>
+            <?php if (!empty($error)): ?>
+                <div class="alert alert-danger text-center"><?php echo htmlspecialchars($error); ?></div>
+            <?php endif; ?>
 
-    </div>
-</div>
+            <form method="post">
+                <label class="small-label"><?php echo __("admin_password_label"); ?></label>
+                <input type="password" name="password" class="form-control mb-3" required>
+                <button class="btn btn-primary w-100"><?php echo __("admin_login_btn"); ?></button>
+            </form>
 
+            <a href="index.php" class="btn btn-outline-secondary w-100 mt-2">
+                ← <?php echo __("admin_back_dashboard"); ?>
+            </a>
+
+        </div>
+      </div>
     </body>
     </html>
     <?php
@@ -301,7 +313,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST['password'])) {
         }
 
         @file_put_contents($configFile, json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE), LOCK_EX);
-        $msg = "✅ Identidad visual guardada.";
+        $msg = __("admin_saved_visual");
     }
 
     // ====== GUARDAR DVREF
@@ -312,7 +324,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST['password'])) {
         if (isset($_POST["dvref_port"]))   $config["dvref_port"]   = clean_text($_POST["dvref_port"]);
 
         @file_put_contents($configFile, json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE), LOCK_EX);
-        $msg = "✅ Configuración DVRef guardada.";
+        $msg = __("admin_saved_dvref");
     }
 
     // ====== GUARDAR TELEGRAM
@@ -322,32 +334,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST['password'])) {
         $tgCfg["invite_link"] = trim((string)($_POST["tg_invite_link"] ?? ""));
 
         @file_put_contents($tgFile, json_encode($tgCfg, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE), LOCK_EX);
-        $msg = "✅ Telegram guardado.";
+        $msg = __("admin_saved_telegram");
     }
 
     // ====== BOTONES MENSAJES (MANUAL)
     if ($action === "tg_test") {
-        [$ok,$err] = tg_send_raw($tgCfg["bot_token"], $tgCfg["chat_id"], "✅ <b>NXLINK</b> — Prueba Telegram OK\n🕒 ".date("Y-m-d H:i:s"));
-        if ($ok) $msg = "✅ Mensaje de prueba enviado.";
+        [$ok,$err] = tg_send_raw($tgCfg["bot_token"], $tgCfg["chat_id"], "✅ <b>NXLINK</b> — " . __("admin_tg_test_ok") . "\n🕒 ".date("Y-m-d H:i:s"));
+        if ($ok) $msg = __("admin_tg_test_sent");
         else $msgErr = "❌ Telegram: ".$err;
     }
 
     if ($action === "tg_send_linked") {
         $log = get_latest_nxdn_log();
         if (!$log) {
-            $msgErr = "❌ No se encontró log NXDN en /var/log/nxdnreflector/";
+            $msgErr = __("admin_no_log_found");
         } else {
             $linked = get_currently_linked_from_log($log);
             if (!$linked) {
-                $msgErr = "⚠️ No se detectaron estaciones conectadas (o no se encontró el bloque) en el log más reciente.";
+                $msgErr = __("admin_no_linked_found");
             } else {
-                $text = "📡 <b>NXLINK — Estaciones Conectadas</b>\n\n";
+                $text = "📡 <b>NXLINK — " . __("admin_connected_stations_title") . "</b>\n\n";
                 foreach ($linked as $stn) {
                     $text .= "• <b>{$stn['cs']}</b> — {$stn['ip']} ({$stn['slot']}/{$stn['timeout']})\n";
                 }
                 $text .= "\n🕒 ".date("Y-m-d H:i:s");
                 [$ok,$err] = tg_send_raw($tgCfg["bot_token"], $tgCfg["chat_id"], $text);
-                if ($ok) $msg = "✅ Resumen de estaciones enviado.";
+                if ($ok) $msg = __("admin_linked_sent");
                 else $msgErr = "❌ Telegram: ".$err;
             }
         }
@@ -368,34 +380,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST['password'])) {
 
         $load=trim(shell_exec("cat /proc/loadavg | awk '{print $1\" \"$2\" \"$3}'"));
 
-        $text="🖥️ <b>NXLINK — Estado del Servidor</b>\n";
+        $text="🖥️ <b>NXLINK — " . __("admin_server_status_title") . "</b>\n";
         $text.="📅 ".date('Y-m-d H:i')."\n";
-        $text.="🌡️ Temp CPU: {$temp} °C\n";
-        $text.="⚙️ Uptime: {$uptime}\n";
-        $text.="💾 RAM: {$ram_used}/{$ram_total} MB ({$ram_pct}%)\n";
-        $text.="🔌 Carga CPU: {$load}\n";
+        $text.="🌡️ " . __("admin_cpu_temp") . ": {$temp} °C\n";
+        $text.="⚙️ " . __("admin_uptime") . ": {$uptime}\n";
+        $text.="💾 " . __("admin_ram") . ": {$ram_used}/{$ram_total} MB ({$ram_pct}%)\n";
+        $text.="🔌 " . __("admin_cpu_load") . ": {$load}\n";
 
         [$ok,$err] = tg_send_raw($tgCfg["bot_token"], $tgCfg["chat_id"], $text);
-        if ($ok) $msg = "✅ Estado del servidor enviado.";
+        if ($ok) $msg = __("admin_server_sent");
         else $msgErr = "❌ Telegram: ".$err;
     }
 
     if ($action === "tg_send_dvref") {
         $cacheFile = __DIR__ . "/data/dvref_status.json";
-        $dv = dvref_status_check_nxdn($config, $cacheFile, 0); // forzar ahora
+        $dv = dvref_status_check_nxdn($config, $cacheFile, 0);
 
-        $text="🌐 <b>NXLINK — Estado DVRef</b>\n\n";
+        $text="🌐 <b>NXLINK — " . __("admin_dvref_status_title") . "</b>\n\n";
         $text.="Estado: <b>".htmlspecialchars($dv["status"])."</b>\n";
         if (!empty($dv["last_verified_at"])) $text.="last_verified_at: <code>".htmlspecialchars($dv["last_verified_at"])."</code>\n";
         if (!empty($dv["detail"])) $text.="\nDetalle: <code>".htmlspecialchars($dv["detail"])."</code>\n";
         $text.="\n🕒 ".date("Y-m-d H:i:s");
 
         [$ok,$err] = tg_send_raw($tgCfg["bot_token"], $tgCfg["chat_id"], $text);
-        if ($ok) $msg = "✅ Estado DVRef enviado.";
+        if ($ok) $msg = __("admin_dvref_sent");
         else $msgErr = "❌ Telegram: ".$err;
     }
 
-    // recargar por si guardaste
+    // recargar config
     $config = file_exists($configFile) ? json_decode(file_get_contents($configFile), true) : $config;
     if (!is_array($config)) $config = [];
     $config += [
@@ -408,59 +420,63 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST['password'])) {
     $tgCfg += ["bot_token"=>"","chat_id"=>"","invite_link"=>""];
 }
 
+// Logo fijo SOLO para Personalización
+$logoPersonalizacion = "img/logo.png";
+
+
+
 ?>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="<?php echo htmlspecialchars($langCode); ?>">
 <head>
 <meta charset="UTF-8">
-<title>Personalización – NXLINK</title>
+<title><?php echo __("admin_personalization_title"); ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
-
+</head>
+<body>
 
 <header class="header-banner">
   <div class="container-fluid">
     <div class="row align-items-center g-3">
 
-      <?php
-        $logoPath = trim((string)($config['logo'] ?? ''));
-        if ($logoPath === '' || !file_exists(__DIR__ . '/' . $logoPath)) {
-          $logoPath = 'img/nxlink_logo.png'; // fallback
-        }
-      ?>
-
       <!-- IZQUIERDA: logo + títulos -->
       <div class="col-md-8 col-12">
         <div class="header-title text-light d-flex align-items-center gap-3">
-          <img
-            src="<?php echo htmlspecialchars($logoPath); ?>"
-            alt="Logo NXLINK"
-            style="height:72px; width:72px; border-radius:12px; object-fit:contain; background:rgba(255,255,255,.06); padding:6px;"
-          >
+          <img 
+  		src="<?php echo htmlspecialchars($logoPersonalizacion); ?>" 
+  		style="height:90px; border-radius:12px;">
+
           <div>
             <div class="text-uppercase fw-bold" style="font-size:1.7rem; letter-spacing:0.05em;">
-              <i class="bi bi-sliders"></i> PERSONALIZACIÓN NXLINK
+              <i class="bi bi-sliders"></i> <?php echo __("admin_personalization_header"); ?>
             </div>
             <div class="mt-1" style="font-size:1rem; opacity:0.85;">
-              Ajusta parámetros visuales, DVRef y Telegram
+              <?php echo __("admin_personalization_subheader"); ?>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- DERECHA: hora + logout -->
+      <!-- DERECHA: idioma + hora + logout -->
       <div class="col-md-4 col-12">
         <div class="d-flex flex-column align-items-md-end align-items-start gap-1">
+
+          <div class="d-flex gap-2">
+            <a href="?lang=es" class="btn btn-outline-light btn-sm <?php echo ($langCode==='es')?'active':''; ?>">🇪🇸 ES</a>
+            <a href="?lang=en" class="btn btn-outline-light btn-sm <?php echo ($langCode==='en')?'active':''; ?>">🇺🇸 EN</a>
+          </div>
+
           <div class="small-label text-light" style="opacity:.85;">
             <i class="bi bi-clock-history"></i>
-            Última actualización: <?php echo date("d-m-Y H:i:s"); ?>
+            <?php echo __("last_update"); ?>: <?php echo date("d-m-Y H:i:s"); ?>
           </div>
 
           <a href="?logout=1" class="btn btn-outline-light btn-sm">
-            <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+            <i class="bi bi-box-arrow-right"></i> <?php echo __("admin_logout"); ?>
           </a>
         </div>
       </div>
@@ -468,7 +484,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST['password'])) {
     </div>
   </div>
 </header>
-
 
 <main class="container-fluid py-3">
 <?php include __DIR__ . '/includes/nav_nxdn.php'; ?>
@@ -485,26 +500,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST['password'])) {
   <!-- IDENTIDAD VISUAL -->
   <div class="col-lg-6">
     <div class="card-custom">
-      <div class="title-module"><i class="bi bi-palette"></i> Identidad Visual</div>
+      <div class="title-module"><i class="bi bi-palette"></i> <?php echo __("admin_visual_identity"); ?></div>
       <div class="divider-soft"></div>
 
       <form method="post" enctype="multipart/form-data">
         <input type="hidden" name="action" value="save_visual">
 
-        <label class="small-label">Título del Dashboard</label>
+        <label class="small-label"><?php echo __("admin_dashboard_title_label"); ?></label>
         <input type="text" name="titulo" class="form-control mb-3" value="<?php echo htmlspecialchars($config['titulo']); ?>">
 
-        <label class="small-label">Subtítulo</label>
+        <label class="small-label"><?php echo __("admin_subtitle_label"); ?></label>
         <input type="text" name="subtitulo" class="form-control mb-3" value="<?php echo htmlspecialchars($config['subtitulo']); ?>">
 
-        <label class="small-label">Frase destacada</label>
+        <label class="small-label"><?php echo __("admin_tagline_label"); ?></label>
         <input type="text" name="frase" class="form-control mb-3" value="<?php echo htmlspecialchars($config['frase']); ?>">
 
-        <label class="small-label">Logo actual</label><br>
-        <img src="<?php echo htmlspecialchars($config['logo']); ?>" style="height:80px; border-radius:10px; margin-bottom:10px;">
+        <label class="small-label"><?php echo __("admin_current_logo"); ?></label><br>
+        <img src="<?php echo htmlspecialchars($logoPath); ?>" style="height:80px; border-radius:10px; margin-bottom:10px;">
         <input type="file" name="logo" class="form-control mb-3" accept=".png,.jpg,.jpeg,.webp,.gif">
 
-        <button class="btn btn-primary w-100 mt-2">Guardar Identidad</button>
+        <button class="btn btn-primary w-100 mt-2"><?php echo __("admin_save_visual_btn"); ?></button>
       </form>
     </div>
   </div>
@@ -512,31 +527,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST['password'])) {
   <!-- DVREF -->
   <div class="col-lg-6">
     <div class="card-custom">
-      <div class="title-module"><i class="bi bi-broadcast-pin"></i> Configuración DVRef</div>
+      <div class="title-module"><i class="bi bi-broadcast-pin"></i> <?php echo __("admin_dvref_config"); ?></div>
       <div class="divider-soft"></div>
 
       <form method="post">
         <input type="hidden" name="action" value="save_dvref">
 
-        <label class="small-label">TG Principal</label>
+        <label class="small-label"><?php echo __("admin_main_tg"); ?></label>
         <input type="number" name="tg_principal" class="form-control mb-3" value="<?php echo htmlspecialchars($config['tg_principal']); ?>">
 
-        <label class="small-label">DVRef Token</label>
+        <label class="small-label"><?php echo __("admin_dvref_token"); ?></label>
         <input type="text" name="dvref_token" class="form-control mb-3"
                value="<?php echo htmlspecialchars($config['dvref_token']); ?>"
-               placeholder="Token DVRef (si aplica)">
+               placeholder="<?php echo __("admin_dvref_token_ph"); ?>">
 
-        <label class="small-label">Host (DNS) publicado en DVRef</label>
+        <label class="small-label"><?php echo __("admin_dvref_host"); ?></label>
         <input type="text" name="dvref_host" class="form-control mb-3"
                value="<?php echo htmlspecialchars($config['dvref_host']); ?>"
                placeholder="reflectores.zonadmr.cl">
 
-        <label class="small-label">Puerto publicado en DVRef</label>
+        <label class="small-label"><?php echo __("admin_dvref_port"); ?></label>
         <input type="number" name="dvref_port" class="form-control mb-3"
                value="<?php echo htmlspecialchars($config['dvref_port']); ?>"
                placeholder="41400">
 
-        <button class="btn btn-primary w-100 mt-2">Guardar DVRef</button>
+        <button class="btn btn-primary w-100 mt-2"><?php echo __("admin_save_dvref_btn"); ?></button>
       </form>
     </div>
   </div>
@@ -544,73 +559,73 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST['password'])) {
   <!-- TELEGRAM + BOTONES MENSAJES -->
   <div class="col-lg-6">
     <div class="card-custom">
-      <div class="title-module"><i class="bi bi-telegram"></i> Telegram</div>
+      <div class="title-module"><i class="bi bi-telegram"></i> <?php echo __("admin_telegram"); ?></div>
       <div class="divider-soft"></div>
 
       <form method="post">
         <input type="hidden" name="action" value="save_telegram">
 
-        <label class="small-label">Bot Token</label>
+        <label class="small-label"><?php echo __("admin_bot_token"); ?></label>
         <input type="password" name="tg_bot_token" class="form-control mb-3"
                value="<?php echo htmlspecialchars($tgCfg['bot_token'] ?? ''); ?>"
                placeholder="123456:ABCDEF...">
 
-        <label class="small-label">Chat ID</label>
+        <label class="small-label"><?php echo __("admin_chat_id"); ?></label>
         <input type="text" name="tg_chat_id" class="form-control mb-3"
                value="<?php echo htmlspecialchars($tgCfg['chat_id'] ?? ''); ?>"
                placeholder="-1001234567890 o 12345678">
 
-        <label class="small-label">Link de invitación (opcional)</label>
+        <label class="small-label"><?php echo __("admin_invite_link"); ?></label>
         <input type="text" name="tg_invite_link" class="form-control mb-3"
                value="<?php echo htmlspecialchars($tgCfg['invite_link'] ?? ''); ?>"
                placeholder="https://t.me/+xxxxx">
 
-        <button class="btn btn-primary w-100 mt-2">Guardar Telegram</button>
+        <button class="btn btn-primary w-100 mt-2"><?php echo __("admin_save_telegram_btn"); ?></button>
       </form>
 
       <?php if (!empty($tgCfg["invite_link"])): ?>
         <div class="divider-soft mt-3"></div>
         <a class="btn btn-outline-light w-100" href="<?php echo htmlspecialchars($tgCfg["invite_link"]); ?>" target="_blank">
-          <i class="bi bi-box-arrow-up-right"></i> Abrir invitación
+          <i class="bi bi-box-arrow-up-right"></i> <?php echo __("admin_open_invite"); ?>
         </a>
       <?php endif; ?>
 
       <div class="divider-soft mt-3"></div>
-      <div class="title-module"><i class="bi bi-send"></i> Mensajes (manual)</div>
-      <div class="small-label" style="opacity:.85;">Usa estos botones para probar antes de automatizar con CRON.</div>
+      <div class="title-module"><i class="bi bi-send"></i> <?php echo __("admin_manual_messages"); ?></div>
+      <div class="small-label" style="opacity:.85;"><?php echo __("admin_manual_messages_hint"); ?></div>
 
       <div class="d-grid gap-2 mt-2">
         <form method="post">
           <input type="hidden" name="action" value="tg_test">
           <button class="btn btn-outline-success w-100">
-            <i class="bi bi-check2-circle"></i> Probar Telegram
+            <i class="bi bi-check2-circle"></i> <?php echo __("admin_test_telegram_btn"); ?>
           </button>
         </form>
 
         <form method="post">
           <input type="hidden" name="action" value="tg_send_linked">
           <button class="btn btn-outline-info w-100">
-            <i class="bi bi-people"></i> Enviar estaciones conectadas (ahora)
+            <i class="bi bi-people"></i> <?php echo __("admin_send_linked_btn"); ?>
           </button>
         </form>
 
         <form method="post">
           <input type="hidden" name="action" value="tg_send_server">
           <button class="btn btn-outline-warning w-100">
-            <i class="bi bi-hdd-network"></i> Enviar estado del servidor (ahora)
+            <i class="bi bi-hdd-network"></i> <?php echo __("admin_send_server_btn"); ?>
           </button>
         </form>
 
         <form method="post">
           <input type="hidden" name="action" value="tg_send_dvref">
           <button class="btn btn-outline-primary w-100">
-            <i class="bi bi-globe2"></i> Enviar estado DVRef (ahora)
+            <i class="bi bi-globe2"></i> <?php echo __("admin_send_dvref_btn"); ?>
           </button>
         </form>
       </div>
 
       <div class="small-label mt-3" style="opacity:.85;">
-        Log detectado: <b><?php echo htmlspecialchars(get_latest_nxdn_log() ?: "No encontrado"); ?></b>
+        <?php echo __("admin_detected_log"); ?>: <b><?php echo htmlspecialchars(get_latest_nxdn_log() ?: __("admin_log_not_found")); ?></b>
       </div>
 
     </div>
@@ -623,3 +638,4 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST['password'])) {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
