@@ -68,7 +68,7 @@ Ejemplo de ruta de logs:
 
 ## 🤝 Créditos
 - **Jonathan Naylor (G4KLX)** – base de software para reflectores/MMDVM.  
-- **DVReflector de NØSTAR** – pilar para gestión moderna P25.
+- **DVReflector de NØSTAR** – instalador de reflectores.
 - **ZONA DMR CL** - apoyo continuo y pruebas de comunicaciones, gracias amigos 
 - Comunidad internacional de radioaficionados digitales.  
 
