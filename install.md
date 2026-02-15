@@ -160,38 +160,44 @@ sudo apt install git -y
 ```bash
 cd /var/www/
 sudo rm -rf /var/www/html
-sudo git clone https://github.com/telecov/LYNK25.git html
+sudo git clone https://github.com/telecov/NXLINK.git html
 ```
 
 2. Permisos
 ```bash
 sudo chown -R www-data:www-data /var/www/html
 sudo chmod -R 755 /var/www/html
-sudo chmod 664 /var/www/html/data/*.json
 ```
 
 2.1 Crear servicio Telegram Tiempo Real
 ```bash
-sudo nano /etc/systemd/system/lynk25-realtime.service
+sudo nano /etc/systemd/system/nxdn-telegram-realtime.service
 ```
 escribe, guarda este servicio
 ```bash
 [Unit]
-Description=LYNK25 Telegram Realtime Notifier
-After=network.target
+Description=NXDN Telegram Realtime Notifier
+After=network-online.target
+Wants=network-online.target
 
 [Service]
-ExecStart=/usr/bin/php /var/www/html/includes/telegram_realtime.php
+Type=simple
+ExecStart=/usr/bin/php /var/www/html/scripts/nxdn_telegram_realtime.php
 Restart=always
-User=teleco
+RestartSec=2
+User=www-data
+Group=www-data
 
 [Install]
 WantedBy=multi-user.target
 ```
-Activa el servicio
+
+Activa y verifica el servicio
 
 ```bash
-sudo systemctl enable --now lynk25-realtime.service
+sudo systemctl daemon-reload
+sudo systemctl enable --now nxdn-telegram-realtime
+sudo systemctl status nxdn-telegram-realtime --no-pager
 ```
 
 Ejecucion de Cron para informes del servidor via telegram y Alerta de Reflector
@@ -215,21 +221,22 @@ sudo crontab -u www-data -l
 3. Acceso WEB
 Accede desde tu navegador:
 
-http://tu-servidor/
+http://ip_de_tu_servidor/
 
 
 ## 🧠 Configuración Inicial
 
-Toda la configuración de LYNK25 se realiza desde la interfaz web, sin editar archivos manualmente.
-Página de Personalización
+Toda la configuración de LYN se realiza desde la interfaz web, sin editar archivos manualmente.
+Página de Personalización y configuracion
 
 Accede a:
-http://tu-servidor/personalizar_header.php
+http://tu-servidor/personalizar.php
+http://tu-servidor/configuracion.php
 
 Contraseña por defecto
+
 ```bash
-  admin
-  lynk252025
+  nxlink2025
 ```
 
 Desde esta página podrás configurar:
@@ -252,19 +259,6 @@ crea un canal o agraga tu bot como admin al grupo Telegram
 buscar el ID del canal o grupo a utilizar https://api.telegram.org/bot/getUpdates
 Asociar grupo o canal
 
-* Controla mensajes automáticos de actividad o errores
-
-## 🎨 Apariencia y encabezado
-
-* Cambiar logos, íconos y textos principales
-* Editar colores o imagen de fondo
 
 ## Personalizar el título y lema del proyecto
 
-* Los cambios se guardan automáticamente en:
-
-```bash
-/data/header_config.json
-/data/dvref_config.json
-/data/telegram_state.json
-```
