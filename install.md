@@ -19,7 +19,7 @@ CPU: Dual Core 1.2 GHz o superior (Intel Atom / Celeron)
 RAM: 1 GB mínimo (2 GB recomendado)
 Almacenamiento: 8 GB (SD o HDD)
 Red: Ethernet 100 Mbps o Wi-Fi b/g/n
-SO: Debian, Ubuntu Server, Raspbian, Bannanian 
+SO: Debian 12, Debian 13, Ubuntu Server, Raspbian, Bannanian 
 
 * Raspberry PI 3 
 
@@ -80,7 +80,7 @@ sudo nano /etc/NXDNReflector/NXDNReflector.ini
 ```
 ```bash
 [General]
-TG=30444
+TG=9999
 Daemon=0
 
 [Id Lookup]
