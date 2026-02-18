@@ -127,10 +127,10 @@ sudo visudo -f /etc/sudoers.d/nxlynk
 ```
 
 ```bash
-www-data ALL=(ALL) NOPASSWD:/usr/bin/systemctl start nxdnreflector.service
-www-data ALL=(ALL) NOPASSWD:/usr/bin/systemctl stop nxdnreflector.service
-www-data ALL=(ALL) NOPASSWD:/usr/bin/systemctl restart nxdnreflector.service
-www-data ALL=(ALL) NOPASSWD:/usr/bin/systemctl status nxdnreflector.service
+www-data ALL=(ALL) NOPASSWD:/usr/bin/systemctl start nxdnreflector
+www-data ALL=(ALL) NOPASSWD:/usr/bin/systemctl stop nxdnreflector
+www-data ALL=(ALL) NOPASSWD:/usr/bin/systemctl restart nxdnreflector
+www-data ALL=(ALL) NOPASSWD:/usr/bin/systemctl status nxdnreflector
 www-data ALL=(ALL) NOPASSWD:/usr/sbin/reboot
 www-data ALL=(ALL) NOPASSWD:/usr/bin/nmcli
 ```
