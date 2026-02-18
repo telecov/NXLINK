@@ -135,6 +135,14 @@ www-data ALL=(ALL) NOPASSWD:/usr/sbin/reboot
 www-data ALL=(ALL) NOPASSWD:/usr/bin/nmcli
 ```
 
+Permisos de escritura para www-data en archivo NXDNReflector.ini
+
+```bash
+sudo chown root:www-data /etc/NXDNReflector/NXDNReflector.ini
+sudo chmod 664 /etc/NXDNReflector/NXDNReflector.ini
+```
+
+
 ```bash
 sudo systemctl daemon-reload
 sudo systemctl enable nxdnreflector.service
