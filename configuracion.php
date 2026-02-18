@@ -22,7 +22,7 @@ if (isset($_GET['logout'])) {
 /* =============================
    AUTO-REFRESH (dashboard)
    ============================= */
-$AUTO_REFRESH_SECONDS = 10; // cambia a 0 para desactivar
+$AUTO_REFRESH_SECONDS = 60; // cambia a 0 para desactivar
 
 /* =============================
    CSRF
