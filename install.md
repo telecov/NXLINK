@@ -43,7 +43,7 @@ PUTTY - para administrar Linux por SSH
 Para instalar en Raspberry OS se recomieda Raspberry pi Imager
 
 
-📡 Instalación del Reflector P25 (DVReflector)
+📡 Instalación del Reflector NXLINK (DVReflector)
 
 Creacion de usuario
 
@@ -164,7 +164,7 @@ sudo apt install network-manager -y
 sudo apt install git -y
 ```
 
-1. Copia la carpeta completa **LYNK25** a tu servidor web:  
+1. Copia la carpeta completa **NXLINK** a tu servidor web:  
 ```bash
 cd /var/www/
 sudo rm -rf /var/www/html
