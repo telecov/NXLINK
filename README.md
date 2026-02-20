@@ -41,7 +41,7 @@ Este dashboard permite a radioaficionados:
 
 Ideal para:
 
-- Redes comunitarias
+- Radio clubes
 - Reflectores personales
 - Laboratorios de experimentación digital
 
