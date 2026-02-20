@@ -162,6 +162,8 @@ sudo apt install php libapache2-mod-php -y
 sudo apt install php-curl unzip -y
 sudo apt install network-manager -y
 sudo apt install git -y
+sudo apt install -y php-curl
+
 ```
 
 1. Copia la carpeta completa **NXLINK** a tu servidor web:  
