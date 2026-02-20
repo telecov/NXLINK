@@ -162,7 +162,8 @@ sudo apt install php libapache2-mod-php -y
 sudo apt install php-curl unzip -y
 sudo apt install network-manager -y
 sudo apt install git -y
-sudo apt install -y php-curl
+
+sudo systemctl restart apache2
 
 ```
 
