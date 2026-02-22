@@ -55,16 +55,12 @@ Ideal para:
 - Reflector NXDN funcionando, recomendado uso de reflector de NOSTAR
 - Acceso a logs del reflector
 
-Ejemplo de ruta de logs:
-/var/log/nxdnreflector/NXDNReflector-YYYY-MM-DD.log
-
-
 ---
 
 ## 👉 [Ver instalacion](install.md) 
 
 ## 👉 [Ver cambios del sistema](CHANGELOG.md) 
-- Chequea constantemente los cambios para que puedas tener tu NXLYNK optimizado y al dia
+- si tienes u a vwrsion distinta a la del log, puedes re instalar el dashboard borrando carpeta html y copiando nuevamete 👍
 
 ## 🤝 Créditos
 - **Jonathan Naylor (G4KLX)** – base de software para reflectores/MMDVM.  
