@@ -78,6 +78,12 @@ sudo mkdir -p /var/log/nxdnreflector
 sudo chmod 777 /var/log/nxdnreflector
 ```
 
+Descargar ID NXDN 
+
+```bash
+sudo curl -o /etc/NXDNReflector/nxdn.csv https://radioid.net/static/nxdn.csv
+```
+
 Configurar el archivo /etc/NXDNReflector/NXDNReflector.ini
 ```bash
 sudo nano /etc/NXDNReflector/NXDNReflector.ini
@@ -88,7 +94,7 @@ TG=9999
 Daemon=0
 
 [Id Lookup]
-Name=NXDN.csv
+Name=/etc/NXDNReflector/nxdn.csv
 Time=24
 
 [Log]
