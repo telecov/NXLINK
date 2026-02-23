@@ -45,7 +45,11 @@ Para instalar en Raspberry OS se recomieda Raspberry pi Imager
 
 📡 Instalación del Reflector NXLINK (DVReflector)
 
-Creacion de usuario
+# 📦 primero actualiza los repositorios
+
+```bash
+sudo apt update
+```
 
 Descargar DVReflector NXDN
 
