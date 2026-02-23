@@ -28,6 +28,13 @@ Diseñado para funcionar sobre servidores Linux (Debian / Ubuntu / Raspberry Pi 
 ![Dashboard NXLINK](img/dashboard_1.png)
 ![Dashboard NXLINK](img/dashboard_2.png)
 
+---
+## PRESENTACION 
+
+[VIDEO DE YOUTUBE NXLINK](https://youtu.be/OhCTUfrEq38?si=tPsnN2qXmfsCvNVe)
+[![](https://markdown-videos.deta.dev/youtube.com/OhCTUfrEq38?si=tPsnN2qXmfsCvNVe)](https://youtu.be/OhCTUfrEq38?si=tPsnN2qXmfsCvNVe)
+
+---
 
 ## 🧠 ¿Para qué sirve?
 
