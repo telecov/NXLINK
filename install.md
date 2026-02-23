@@ -88,7 +88,7 @@ TG=9999
 Daemon=0
 
 [Id Lookup]
-Name=/opt/DVReflectors/P25Reflector/DMRIds.dat
+Name=NXDN.csv
 Time=24
 
 [Log]
