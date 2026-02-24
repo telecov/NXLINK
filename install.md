@@ -213,6 +213,7 @@ Activa y verifica el servicio
 ```bash
 sudo systemctl daemon-reload
 sudo systemctl enable --now nxdn-telegram-realtime
+sudo systemctl start nxdn-telegram-realtime
 sudo systemctl status nxdn-telegram-realtime --no-pager
 ```
 
