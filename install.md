@@ -105,7 +105,7 @@ Port=41400
 Debug=0
 ```
 
-Crear servicio Systemd para autoinicio
+Crear servicio Systemd para autoinicio ---- atencion si cargaste el sistema operativo con un usuario propio y no el usuario teleco, debes cambiar el nombre de usuario en [Service] User=teleco por tu usuario sudo
 
 ```bash
 sudo nano /etc/systemd/system/nxdnreflector.service
