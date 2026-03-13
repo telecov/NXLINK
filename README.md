@@ -86,9 +86,5 @@ Radioaficionado, desarrollador autodidacta y creador de contenidos digitales:
 * 🔗 Instagram: https://instagram.com/telecoviajero
 * 📺 YouTube: https://www.youtube.com/@Telecoviajero
 
-## Te invito a suscribirte a miembros de youtube, tu aporte sin duda apoya a seguir creando 
+## Te invito a suscribirte a miembros de youtube, tu aporte sin duda apoya a seguir creando contenido
 https://www.youtube.com/channel/UCekZOnVxrOoDuJlFCgGKi9A/join
-
-## Puedes Apoyar este proyecto de manera voluntaria
-https://www.paypal.com/donate/?hosted_button_id=DGA8ADD7EA63Y
-
