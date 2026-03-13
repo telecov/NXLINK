@@ -199,6 +199,6 @@ return [
   "about_support_p1" => "Si deseas apoyar este proyecto de manera <strong>voluntaria</strong>, puedes realizar una donación. También puedes seguirme en mis redes sociales para más contenido de radioafición y proyectos técnicos.",
   "about_donate_btn" => "Donación voluntaria",
   "about_support_note" => "Gracias por apoyar el crecimiento de la red y el desarrollo del dashboard.",
-
+  "about_join_btn" => "Únete como miembro en YouTube",
 
 ];
