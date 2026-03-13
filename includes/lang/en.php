@@ -200,6 +200,6 @@ return [
   "about_support_p1" => "If you want to support this project <strong>voluntarily</strong>, you can donate. You can also follow me on social media for more ham radio content and technical projects.",
   "about_donate_btn" => "Voluntary donation",
   "about_support_note" => "Thanks for supporting the network’s growth and the dashboard development.",
-
+  "about_join_btn" => "Join as a YouTube member",
 
 ];
