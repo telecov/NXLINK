@@ -250,13 +250,13 @@ if ($logoPath === '' || !file_exists(__DIR__ . '/' . $logoPath)) {
         </div>
 
         <div class="d-grid mt-auto">
-          <form action="https://www.paypal.com/donate" method="post" target="_top">
-            <input type="hidden" name="hosted_button_id" value="DGA8ADD7EA63Y" />
-            <button type="submit" class="btn btn-primary w-100">
-              <i class="bi bi-heart-fill me-2"></i> <?php echo __("about_donate_btn"); ?>
-            </button>
-          </form>
-        </div>
+           <a href="https://www.youtube.com/channel/UCekZOnVxrOoDuJlFCgGKi9A/join"
+           target="_blank"
+           rel="noopener"
+           class="btn btn-danger w-100">
+             <i class="bi bi-youtube me-2"></i> <?php echo __("about_join_btn"); ?>
+           </a>
+      </div>
 
         <div class="small-label mt-3" style="opacity:.8;">
           <?php echo __("about_support_note"); ?>
