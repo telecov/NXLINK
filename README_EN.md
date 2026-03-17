@@ -107,8 +107,8 @@ If this project helps you, consider supporting it 🙌
 👉 Join YouTube Membership:  
 https://www.youtube.com/channel/UCekZOnVxrOoDuJlFCgGKi9A/join  
 
-Your support helps keep developing tools for the community.
-
+❤️ Your support helps keep developing tools for the community.
+https://www.paypal.com/donate/?hosted_button_id=MSJZZN9KLHNG6
 ---
 
 ## 📜 License
