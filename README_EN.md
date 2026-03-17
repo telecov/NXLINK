@@ -66,7 +66,7 @@ It provides:
 
 ## 📥 Installation
 
-👉 [Installation Guide](install.md)
+👉 [Installation Guide](install_en.md)
 
 ---
 
