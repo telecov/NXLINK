@@ -2,6 +2,8 @@
 
 ### Dashboard Web para Reflector NXDN
 
+🌐 [Ver documentación en Español](install.md)  
+🌐 [View documentation in English](install_en.md)
 
 ---
 
