@@ -107,8 +107,8 @@ Si este proyecto te ayuda, puedes apoyarlo 🙌
 👉 Únete a miembros de YouTube:  
 https://www.youtube.com/channel/UCekZOnVxrOoDuJlFCgGKi9A/join  
 
-Tu apoyo permite seguir creando herramientas para la comunidad.
-
+❤️ Tu apoyo permite seguir creando herramientas para la comunidad.
+https://www.paypal.com/donate/?hosted_button_id=MSJZZN9KLHNG6
 ---
 
 ## 📜 Licencia
