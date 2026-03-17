@@ -1,89 +1,135 @@
-**Dashboard Web NXLINK para Reflector nxdn**  
+# 📡 Instalación NXLink Dashboard
+
+### Dashboard Web para Reflector NXDN
+
 
 ---
 
-🖥️ Requisitos
-*** Tener instalado y corriendo DVREFLECTOR de NOSTAR ***
-https://github.com/nostar/DVReflectors
+## 🖥️ Requisitos
 
-si ya lo tienes instalado y funcionando, puedes saltar directamente a la instalacion del DASHBOARD, ahora si estas iniciando puedes seguir el paso a paso apoyando de este video
+⚠️ **IMPORTANTE:**
+Debes tener instalado y funcionando previamente **DVReflector de NØSTAR**
 
-PRECAUCION, si ya tienes un dashboard web funcionando te recomiendo realizar backup, o instalar este dashboard paralelo para que lo pruebes antes, por ejemplo guardarlo en html/nxdn/ para asi no perder lo que tienes en html, si es de tu gusto puede eliminar todo y seguir el procedimieto 
+👉 https://github.com/nostar/DVReflectors
 
-###
+Si ya tienes tu reflector funcionando, puedes ir directamente a la instalación del dashboard.
 
-* Hardware recomendado:
+Si estás comenzando desde cero, puedes apoyarte en el video de instalación.
 
-* Requisitos mínimos:
-CPU: Dual Core 1.2 GHz o superior (Intel Atom / Celeron)
-RAM: 1 GB mínimo (2 GB recomendado)
-Almacenamiento: 8 GB (SD o HDD)
-Red: Ethernet 100 Mbps o Wi-Fi b/g/n
-SO: Debian 12, Debian 13, Ubuntu Server, Raspbian, Bannanian 
+---
 
-* Raspberry PI 3 
+## ⚠️ Recomendación previa
 
-NXLINK ha sido probado y funciona de forma óptima en:
+Si ya tienes un dashboard web funcionando:
 
-Distribución recomendada: Debian 12+ / Raspbian 12
-Entornos compatibles: Raspberry Pi OS, Ubuntu Server, Armbian (bookwoorm)
-Equipo recomendado: Computador o mini-servidor con Linux
+* Realiza un **backup completo**
+* O instala NXLink en una ruta alternativa (ej: `/var/www/html/nxdn/`)
 
-Software necesario:
+Esto evita perder configuraciones existentes.
 
-Apache2
-PHP 8.2 o superior
-Git
-cURL
+---
 
-** Software necesario para configurar **
-IPSCANNER - para identificar ip de equipo
-PUTTY - para administrar Linux por SSH
+## 💻 Hardware recomendado
 
-Para instalar en Raspberry OS se recomieda Raspberry pi Imager
+### Requisitos mínimos
 
+* CPU: Dual Core 1.2 GHz o superior (Intel Atom / Celeron)
+* RAM: 1 GB mínimo (2 GB recomendado)
+* Almacenamiento: 8 GB (SD o HDD)
+* Red: Ethernet 100 Mbps o WiFi b/g/n
+* Sistema operativo:
 
-📡 Instalación del Reflector NXLINK (DVReflector)
+  * Debian 12 / 13
+  * Ubuntu Server
+  * Raspberry Pi OS
+  * Armbian (Bookworm)
 
-# 📦 primero actualiza los repositorios
+---
+
+## 🧪 Plataformas probadas
+
+NXLink ha sido probado en:
+
+* Raspberry Pi 3 / 4
+* Debian 12+
+* Raspberry Pi OS
+* Ubuntu Server
+* Banana Pi / Armbian
+
+---
+
+## 📦 Software requerido
+
+* Apache2
+* PHP 8.2 o superior
+* Git
+* cURL
+
+---
+
+## 🛠 Herramientas recomendadas
+
+* **IP Scanner** → identificar IP del equipo
+* **PuTTY** → acceso SSH
+* **Raspberry Pi Imager** → instalación de sistema
+
+---
+
+# 📡 Instalación del Reflector NXDN (DVReflector)
+
+## 1️⃣ Actualizar repositorios
 
 ```bash
 sudo apt update
 ```
 
-Descargar DVReflector NXDN
+---
+
+## 2️⃣ Descargar DVReflector
 
 ```bash
 cd /opt
 sudo git clone https://github.com/nostar/DVReflectors.git
 sudo chmod -R 777 DVReflectors
 ```
-Compilar e instalar
+
+---
+
+## 3️⃣ Compilar
 
 ```bash
 cd /opt/DVReflectors/NXDNReflector
 make clean
 make -j4
 ```
-Copiar archivo INI a /etc/
+
+---
+
+## 4️⃣ Copiar configuración
 
 ```bash
 sudo mkdir -p /etc/NXDNReflector
-sudo cp /opt/DVReflectors/NXDNReflector/NXDNReflector.ini /etc/NXDNReflector/
+sudo cp NXDNReflector.ini /etc/NXDNReflector/
 ```
-Crear carpeta de logs
+
+---
+
+## 5️⃣ Crear logs
 
 ```bash
 sudo mkdir -p /var/log/nxdnreflector
 sudo chmod 777 /var/log/nxdnreflector
 ```
 
+---
 
-Configurar el archivo /etc/NXDNReflector/NXDNReflector.ini
+## 6️⃣ Configurar archivo
+
 ```bash
 sudo nano /etc/NXDNReflector/NXDNReflector.ini
 ```
-```bash
+
+```ini
 [General]
 TG=9999
 Daemon=0
@@ -93,7 +139,6 @@ Name=nxdn.csv
 Time=24
 
 [Log]
-# Logging levels, 0=No logging
 DisplayLevel=1
 FileLevel=1
 FilePath=var/log/nxdnreflector
@@ -105,13 +150,17 @@ Port=41400
 Debug=0
 ```
 
-Crear servicio Systemd para autoinicio ---- atencion si cargaste el sistema operativo con un usuario propio y no el usuario teleco, debes cambiar el nombre de usuario en [Service] User=teleco por tu usuario sudo
+---
+
+## 7️⃣ Crear servicio systemd
+
+⚠️ Cambia `User=teleco` por tu usuario real
 
 ```bash
 sudo nano /etc/systemd/system/nxdnreflector.service
 ```
 
-```bash
+```ini
 [Unit]
 Description=NXDN Reflector
 After=network.target
@@ -125,10 +174,12 @@ Restart=always
 WantedBy=multi-user.target
 ```
 
-Permisos VISUDO para ejecutar cambios en el servidor 
+---
+
+## 8️⃣ Permisos sudo (VISUDO)
 
 ```bash
-sudo visudo -f /etc/sudoers.d/nxlynk
+sudo visudo -f /etc/sudoers.d/nxlink
 ```
 
 ```bash
@@ -140,140 +191,152 @@ www-data ALL=(ALL) NOPASSWD:/usr/sbin/reboot
 www-data ALL=(ALL) NOPASSWD:/usr/bin/nmcli
 ```
 
-Permisos de escritura para www-data en archivo NXDNReflector.ini
+---
+
+## 9️⃣ Permisos archivo INI
 
 ```bash
 sudo chown root:www-data /etc/NXDNReflector/NXDNReflector.ini
 sudo chmod 664 /etc/NXDNReflector/NXDNReflector.ini
 ```
 
+---
+
+## 🔟 Activar servicio
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable nxdnreflector.service
-sudo systemctl start nxdnreflector.service
-sudo systemctl status nxdnreflector.service
+sudo systemctl enable nxdnreflector
+sudo systemctl start nxdnreflector
+sudo systemctl status nxdnreflector
 ```
 
+---
 
-## 📦 Instalación del Dashboard
+# 📦 Instalación del Dashboard NXLink
 
-🧰 Paso a paso
+## 1️⃣ Instalar dependencias
 
 ```bash
 sudo apt update
-sudo apt install apache2 -y
-sudo apt install php libapache2-mod-php -y
-sudo apt install php-curl unzip -y
-sudo apt install network-manager -y
-sudo apt install git -y
-
+sudo apt install apache2 php libapache2-mod-php php-curl unzip git network-manager -y
 sudo systemctl restart apache2
-
 ```
 
-1. Copia la carpeta completa **NXLINK** a tu servidor web:  
+---
+
+## 2️⃣ Clonar dashboard
+
 ```bash
 cd /var/www/
-sudo rm -rf /var/www/html
+sudo rm -rf html
 sudo git clone https://github.com/telecov/NXLINK.git html
 ```
 
-2. Permisos
+---
+
+## 3️⃣ Permisos
+
 ```bash
 sudo chown -R www-data:www-data /var/www/html
 sudo chmod -R 755 /var/www/html
 ```
 
-2.1 Crear servicio Telegram Tiempo Real
+---
+
+## 4️⃣ Servicio Telegram en tiempo real
+
 ```bash
 sudo nano /etc/systemd/system/nxdn-telegram-realtime.service
 ```
-escribe, guarda este servicio
-```bash
+
+```ini
 [Unit]
 Description=NXDN Telegram Realtime Notifier
 After=network-online.target
-Wants=network-online.target
 
 [Service]
-Type=simple
 ExecStart=/usr/bin/php /var/www/html/scripts/nxdn_telegram_realtime.php
 Restart=always
-RestartSec=2
 User=www-data
-Group=www-data
 
 [Install]
 WantedBy=multi-user.target
 ```
 
-Activa y verifica el servicio
-
 ```bash
 sudo systemctl daemon-reload
 sudo systemctl enable --now nxdn-telegram-realtime
-sudo systemctl start nxdn-telegram-realtime
-sudo systemctl status nxdn-telegram-realtime --no-pager
 ```
 
-Ejecucion de Cron para informes del servidor via telegram y Alerta de Reflector
+---
+
+## 5️⃣ Cron para notificaciones
 
 ```bash
 sudo crontab -u www-data -e
 ```
 
 ```bash
-*/10 * * * * /usr/bin/php /var/www/html/NXDN/includes/telegram_notify.php >> /var/www/html/NXDN/data/cron_telegram_notify.log 2>&1
+*/10 * * * * /usr/bin/php /var/www/html/NXDN/includes/telegram_notify.php
 ```
 
-Verifica el Crontab
+---
 
-```bash
-sudo crontab -u www-data -l
-```
+## 🌐 Acceso web
 
-3. Acceso WEB
 Accede desde tu navegador:
 
-http://ip_de_tu_servidor/
-
-
-## 🧠 Configuración Inicial
-
-Toda la configuración de LYN se realiza desde la interfaz web, sin editar archivos manualmente.
-Página de Personalización y configuracion
-
-Accede a:
-http://tu-servidor/personalizar.php
-http://tu-servidor/configuracion.php
-
-Contraseña por defecto
-
-```bash
-  nxlink2025
+```
+http://IP_DEL_SERVIDOR/
 ```
 
-Desde esta página podrás configurar:
+---
 
-## 🛰️ DVReflector
+# ⚙️ Configuración inicial
 
-Nombre del sistema o reflector
-Dirección IP o dominio del reflector P25
-Puerto y descripción
-Estado de enlace y estadísticas
+## Panel web
 
-## 💬 Telegram
+```
+http://IP_DEL_SERVIDOR/personalizar.php
+http://IP_DEL_SERVIDOR/configuracion.php
+```
 
-* Activar o desactivar notificaciones
+---
 
-Configura Telegram (opcional)
-Crea un bot en @BotFather
-Obten el token http api
-crea un canal o agraga tu bot como admin al grupo Telegram
-buscar el ID del canal o grupo a utilizar https://api.telegram.org/bot/getUpdates
-Asociar grupo o canal
+## 🔐 Contraseña por defecto
 
+```
+nxlink2025
+```
 
-## Personalizar el título y lema del proyecto
+⚠️ Se recomienda cambiarla inmediatamente.
 
+---
+
+## ⚙️ Configuración disponible
+
+### 🛰️ Reflector
+
+* Nombre del sistema
+* IP / dominio
+* Puerto
+* Estado y estadísticas
+
+---
+
+### 💬 Telegram (opcional)
+
+1. Crear bot en **@BotFather**
+2. Obtener token
+3. Crear grupo o canal
+4. Agregar bot como administrador
+5. Obtener ID del grupo
+
+👉 https://api.telegram.org/bot<TOKEN>/getUpdates
+
+---
+
+## ✅ Listo
+
+Tu sistema NXLink estará operativo y accesible vía web.
