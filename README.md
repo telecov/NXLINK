@@ -1,6 +1,6 @@
 # 📡 NXLink Dashboard  
 
-![Versión](https://img.shields.io/badge/version-2.1-blue.svg)
+![Versión](https://img.shields.io/badge/version-1-blue.svg)
 ![Licencia](https://img.shields.io/badge/licencia-GPLv3-green.svg)
 ![PHP](https://img.shields.io/badge/PHP-8.2+-777bb4.svg)
 ![Plataforma](https://img.shields.io/badge/plataforma-Linux-lightgrey.svg)
