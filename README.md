@@ -1,90 +1,116 @@
 # 📡 NXLink Dashboard  
-### Panel Web para NXDN Reflector  
+
+![Versión](https://img.shields.io/badge/version-2.1-blue.svg)
+![Licencia](https://img.shields.io/badge/licencia-GPLv3-green.svg)
+![PHP](https://img.shields.io/badge/PHP-8.2+-777bb4.svg)
+![Plataforma](https://img.shields.io/badge/plataforma-Linux-lightgrey.svg)
+![Estado](https://img.shields.io/badge/estado-activo-success.svg)
+
+[![YouTube](https://img.shields.io/badge/YouTube-Telecoviajero-red?logo=youtube&logoColor=white)](https://www.youtube.com/@Telecoviajero)
+[![Apoyo](https://img.shields.io/badge/Apoya-Unirse%20a%20miembros-red?logo=youtube)](https://www.youtube.com/channel/UCekZOnVxrOoDuJlFCgGKi9A/join)
+
+---
+
+### 🌐 Panel Web para Reflector NXDN  
 Desarrollado por **Telecoviajero · CA2RDP**
+
+---
+
+## 🌍 Documentación
+
+🌐 [Ver documentación en Español](README_ES.md)  
+🌐 [View documentation in English](README_EN.md)
 
 ---
 
 ## 🚀 Descripción
 
-**NXLink Dashboard** es un panel web desarrollado para monitorear y administrar un reflector NXDN en tiempo real.
+**NXLink Dashboard** es un panel web moderno diseñado para monitorear y administrar un reflector NXDN en tiempo real.
 
-Permite visualizar:
+Incluye:
 
-- Estado del reflector
-- Estaciones conectadas
-- Actividad de transmisión
-- Logs dinámicos
-- VU-Meter en tiempo real
-- Configuración básica del sistema
-- Seguridad con autenticación
-- Integración opcional con Telegram
-- Selector de idioma
-
-Diseñado para funcionar sobre servidores Linux (Debian / Ubuntu / Raspberry Pi / Banana Pi).
+- 📡 Monitoreo del estado del reflector  
+- 👥 Visualización de estaciones conectadas  
+- 🎙 Actividad de transmisión en tiempo real  
+- 📜 Logs dinámicos  
+- 📊 VU-Meter en vivo  
+- ⚙️ Panel de configuración básica  
+- 🔐 Seguridad con autenticación  
+- 🤖 Integración opcional con Telegram  
+- 🌐 Soporte multi-idioma  
 
 ---
 
-## DASHBOARD
-![Dashboard NXLINK](img/dashboard_1.png)
+## 📊 Vista previa
+
+![Dashboard NXLINK](img/dashboard_1.png)  
 ![Dashboard NXLINK](img/dashboard_2.png)
 
 ---
-## PRESENTACION 
 
-[VIDEO DE YOUTUBE NXLINK](https://youtu.be/OhCTUfrEq38?si=tPsnN2qXmfsCvNVe)
-[![](https://markdown-videos.deta.dev/youtube.com/OhCTUfrEq38?si=tPsnN2qXmfsCvNVe)](https://youtu.be/OhCTUfrEq38?si=tPsnN2qXmfsCvNVe)
+## 🎬 Presentación
 
----
-
-## 🧠 ¿Para qué sirve?
-
-Este dashboard permite a radioaficionados:
-
-- Supervisar su reflector NXDN desde cualquier navegador
-- Detectar actividad en tiempo real
-- Monitorear logs automáticamente
-- Gestionar configuraciones sin editar archivos manualmente
-- Mejorar la presentación visual de su red digital
-
-Ideal para:
-
-- Radio clubes
-- Reflectores personales
-- Laboratorios de experimentación digital
+[▶ Ver video en YouTube](https://youtu.be/OhCTUfrEq38?si=tPsnN2qXmfsCvNVe)
 
 ---
 
 ## 🛠 Requisitos
 
-- Linux (Debian recomendado)
-- Apache2
-- PHP 8.2 o superior
-- Reflector NXDN funcionando, recomendado uso de reflector de NOSTAR
-- Acceso a logs del reflector
+- Linux (Debian recomendado)  
+- Apache2  
+- PHP 8.2 o superior  
+- Reflector NXDN funcionando (recomendado DVReflector de NOSTAR)  
+- Acceso a logs del reflector  
 
 ---
 
-## 👉 [Ver instalacion](install.md) 
+## 📥 Instalación
 
-## 👉 [Ver cambios del sistema](CHANGELOG.md) 
-- si tienes u a vwrsion distinta a la del log, puedes re instalar el dashboard borrando carpeta html y copiando nuevamete 👍
+👉 [Guía de instalación](install.md)
+
+---
+
+## 🔄 Cambios del sistema
+
+👉 [Ver CHANGELOG](CHANGELOG.md)
+
+⚠️ Si tu versión es distinta, se recomienda reinstalar el dashboard.
+
+---
 
 ## 🤝 Créditos
-- **Jonathan Naylor (G4KLX)** – base de software para reflectores/MMDVM.  
-- **DVReflector de NØSTAR** – instalador de reflectores.
-- **ZONA DMR CL** - apoyo continuo y pruebas de comunicaciones, gracias amigos 
-- Comunidad internacional de radioaficionados digitales.  
+
+- **Jonathan Naylor (G4KLX)** – base de software para reflectores / MMDVM  
+- **DVReflector (NØSTAR)** – instalador de reflectores  
+- **ZONA DMR CL** – apoyo y pruebas  
+- Comunidad internacional de radioaficionados digitales  
+
+---
 
 ## 🧑‍💻 Autor
 
-CA2RDP - TelecoViajero
-Radioaficionado, desarrollador autodidacta y creador de contenidos digitales:
+**Telecoviajero · CA2RDP**  
+Radioaficionado, desarrollador y creador de contenido  
 
-* 🌐 GitHub: https://github.com/telecov
-* 🌐 QRZ: https://www.qrz.com/db/CA2RDP
-* 🔗 TikTok: https://tiktok.com/@telecoviajero
-* 🔗 Instagram: https://instagram.com/telecoviajero
-* 📺 YouTube: https://www.youtube.com/@Telecoviajero
+- 🌐 GitHub: https://github.com/telecov  
+- 🌐 QRZ: https://www.qrz.com/db/CA2RDP  
+- 🎵 TikTok: https://tiktok.com/@telecoviajero  
+- 📸 Instagram: https://instagram.com/telecoviajero  
+- 📺 YouTube: https://www.youtube.com/@Telecoviajero  
 
-## Te invito a suscribirte a miembros de youtube, tu aporte sin duda apoya a seguir creando contenido
-https://www.youtube.com/channel/UCekZOnVxrOoDuJlFCgGKi9A/join
+---
+
+## ❤️ Apoya el proyecto
+
+Si este proyecto te ayuda, puedes apoyarlo 🙌  
+
+👉 Únete a miembros de YouTube:  
+https://www.youtube.com/channel/UCekZOnVxrOoDuJlFCgGKi9A/join  
+
+Tu apoyo permite seguir creando herramientas para la comunidad.
+
+---
+
+## 📜 Licencia
+
+Este proyecto está bajo licencia **GNU GPL v3**.
