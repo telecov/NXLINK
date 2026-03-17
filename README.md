@@ -18,7 +18,7 @@ Desarrollado por **Telecoviajero · CA2RDP**
 
 ## 🌍 Documentación
 
-🌐 [Ver documentación en Español](README_ES.md)  
+🌐 [Ver documentación en Español](README.md)  
 🌐 [View documentation in English](README_EN.md)
 
 ---
