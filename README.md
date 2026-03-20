@@ -6,9 +6,6 @@
 ![Plataforma](https://img.shields.io/badge/plataforma-Linux-lightgrey.svg)
 ![Estado](https://img.shields.io/badge/estado-activo-success.svg)
 
-[![YouTube](https://img.shields.io/badge/YouTube-Telecoviajero-red?logo=youtube&logoColor=white)](https://www.youtube.com/@Telecoviajero)
-[![Apoyo](https://img.shields.io/badge/Apoya-Unirse%20a%20miembros-red?logo=youtube)](https://www.youtube.com/channel/UCekZOnVxrOoDuJlFCgGKi9A/join)
-
 ---
 
 ### 🌐 Panel Web para Reflector NXDN  
@@ -102,15 +99,13 @@ Radioaficionado, desarrollador y creador de contenido
 
 ## ❤️ Apoya el proyecto
 
-Si este proyecto te ayuda, puedes apoyarlo 🙌  
+<p align="center">
+  <b>Si este proyecto te ha ayudado, apóyalo 🚀</b><br><br>
 
-👉 Únete a miembros de YouTube:  
-https://www.youtube.com/channel/UCekZOnVxrOoDuJlFCgGKi9A/join  
+  <a href="https://www.youtube.com/channel/UCekZOnVxrOoDuJlFCgGKi9A/join">
+    <img src="https://img.shields.io/badge/Unirme%20como%20miembro-YouTube-red?style=for-the-badge&logo=youtube">
+  </a>
 
-❤️ Tu apoyo permite seguir creando herramientas para la comunidad.
-https://www.paypal.com/donate/?hosted_button_id=MSJZZN9KLHNG6
----
-
-## 📜 Licencia
-
-Este proyecto está bajo licencia **GNU GPL v3**.
+  <br><br>
+  <i>Gracias por apoyar el desarrollo de herramientas para la comunidad 📡</i>
+</p>
